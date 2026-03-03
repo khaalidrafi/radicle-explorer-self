@@ -31,7 +31,7 @@
 <div class="mobile-footer">
     <Link
         style="width: 100%; display: flex; align-items: center; justify-content: center;"
-        route={{ resource: "nodes", params: undefined }}>
+        route={{ resource: "users", baseUrl: { hostname: config.user.defaultNode.hostname, port: config.user.defaultNode.port, scheme: config.user.defaultNode.scheme }, did: config.user.did }}>
     <img
         width="16"
         height="16"

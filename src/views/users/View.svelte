@@ -5,12 +5,11 @@
   import * as utils from "@app/lib/utils";
   import { fetchRepoInfos } from "@app/components/RepoCard";
   import { handleError } from "@app/views/nodes/error";
- import configObj from "@app/lib/config";
- const config = configObj;
+  import configObj from "@app/lib/config";
+  const config = configObj;
 
-
- import Avatar from "@app/components/Avatar.svelte";
- import Badge from "@app/components/Badge.svelte";
+  import Avatar from "@app/components/Avatar.svelte";
+  import Badge from "@app/components/Badge.svelte";
   import Button from "@app/components/Button.svelte";
   import Command from "@app/components/Command.svelte";
   import ExternalLink from "@app/components/ExternalLink.svelte";
@@ -246,7 +245,15 @@
     </div>
     <Link
       style="display: flex; align-items: center;"
-      route={{ resource: "nodes", params: undefined }}>
+      route={{
+        resource: "users",
+        baseUrl: {
+          hostname: config.user.defaultNode.hostname,
+          port: config.user.defaultNode.port,
+          scheme: config.user.defaultNode.scheme,
+        },
+        did: config.user.did,
+      }}>
       <img
         width="24"
         height="24"

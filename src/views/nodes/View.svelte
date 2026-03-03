@@ -3,8 +3,8 @@
 
   import dompurify from "dompurify";
   import { markdown } from "@app/lib/markdown";
- import configObj from "@app/lib/config";
- const config = configObj;
+  import configObj from "@app/lib/config";
+  const config = configObj;
 
   import Settings from "@app/App/Settings.svelte";
 
@@ -206,7 +206,15 @@
     <div class="breadcrumbs">
       <Link
         style="display: flex; align-items: center;"
-        route={{ resource: "nodes", params: undefined }}>
+        route={{
+          resource: "users",
+          baseUrl: {
+            hostname: config.user.defaultNode.hostname,
+            port: config.user.defaultNode.port,
+            scheme: config.user.defaultNode.scheme,
+          },
+          did: config.user.did,
+        }}>
         <div
           style="background-color: var(--color-background-default);border-radius: var(--border-radius-small); display: flex; padding: 0.5rem 0;">
           <img

@@ -1,7 +1,7 @@
 <script lang="ts">
   import configObj from "@app/lib/config";
- const config = configObj;
- 
+  const config = configObj;
+
   import Footer from "@app/App/Footer.svelte";
   import MobileFooter from "@app/App/MobileFooter.svelte";
   import Link from "@app/components/Link.svelte";
@@ -48,7 +48,15 @@
   <div class="global-hide-on-mobile-down header">
     <Link
       style="display: flex; align-items: center;"
-      route={{ resource: "nodes", params: undefined }}>
+      route={{
+        resource: "users",
+        baseUrl: {
+          hostname: config.user.defaultNode.hostname,
+          port: config.user.defaultNode.port,
+          scheme: config.user.defaultNode.scheme,
+        },
+        did: config.user.did,
+      }}>
       <img
         width="24"
         height="24"
