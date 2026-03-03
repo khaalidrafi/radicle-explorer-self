@@ -15,15 +15,13 @@
     "test:e2e:local": "scripts/compile-local-httpd && USE_LOCAL_HTTPD=true NODE_CONFIG_ENV='test' TZ='UTC' playwright test",
     "test:http-client:unit": "NODE_CONFIG_ENV='test' TZ='UTC' vitest run --config http-client/vite.config.ts --reporter verbose",
     "test:radicle-httpd": "cd radicle-httpd && cargo test --all-features",
-      "deploy": "npx rimraf build && npm clean-install && npm run build && scripts/inject-plausible && npx wrangler deploy",
-    "preview": "npm run build && wrangler dev"
+    "deploy": "rimraf build && npm clean-install && npm run build && scripts/inject-plausible && npx wrangler deploy"
   },
   "type": "module",
   "engines": {
     "node": ">=18.17.1"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.25.6",
     "@eslint/js": "^9.27.0",
     "@playwright/test": "^1.52.0",
     "@sveltejs/vite-plugin-svelte": "^5.0.3",
@@ -54,8 +52,7 @@
     "vite": "^6.3.5",
     "vite-plugin-virtual": "^0.4.0",
     "vitest": "^3.1.4",
-    "wait-on": "^8.0.3",
-    "wrangler": "^4.69.0"
+    "wait-on": "^8.0.3"
   },
   "dependencies": {
     "@radicle/gray-matter": "4.1.0",
