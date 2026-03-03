@@ -17,6 +17,15 @@ import { userRouteToPath, userTitle } from "@app/views/users/router";
 
 export { type Route };
 
+// Add these constants near the top of your router.ts file
+const DEFAULT_BASE_URL: BaseUrl = {
+    hostname: config.user.defaultNode.hostname,  // or your preferred seed node
+    port: config.user.defaultNode.port,
+    scheme: config.user.defaultNode.scheme
+};
+
+const DEFAULT_USER_DID = config.user.did;
+
 const InitialStore = { resource: "booting" as const };
 
 export const isLoading = writable<boolean>(true);
@@ -205,7 +214,11 @@ function urlToRoute(url: URL): Route | null {
       }
     }
     case "": {
-      return { resource: "nodes", params: undefined };
+        return { 
+  resource: "users", 
+  baseUrl: DEFAULT_BASE_URL,  // ← Must use property name
+  did: DEFAULT_USER_DID       // ← Must use property name
+};
     }
     default: {
       return null;
