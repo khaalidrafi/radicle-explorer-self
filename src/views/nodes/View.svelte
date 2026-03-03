@@ -3,6 +3,8 @@
 
   import dompurify from "dompurify";
   import { markdown } from "@app/lib/markdown";
+ import configObj from "@app/lib/config";
+ const config = configObj;
 
   import Settings from "@app/App/Settings.svelte";
 

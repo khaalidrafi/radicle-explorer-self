@@ -1,5 +1,6 @@
 <script lang="ts">
- import config from "@app/lib/config";
+ import configObj from "@app/lib/config";
+ const config = configObj;
 
  import Button from "@app/components/Button.svelte";
  import Icon from "@app/components/Icon.svelte";

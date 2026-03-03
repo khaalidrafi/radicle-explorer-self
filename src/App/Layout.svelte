@@ -1,5 +1,7 @@
 <script lang="ts">
-  import config from "@app/lib/config";
+  import configObj from "@app/lib/config";
+ const config = configObj;
+ 
   import Footer from "@app/App/Footer.svelte";
   import MobileFooter from "@app/App/MobileFooter.svelte";
   import Link from "@app/components/Link.svelte";

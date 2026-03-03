@@ -5,7 +5,8 @@
   import * as utils from "@app/lib/utils";
   import { fetchRepoInfos } from "@app/components/RepoCard";
   import { handleError } from "@app/views/nodes/error";
- import config from "@app/lib/config";
+ import configObj from "@app/lib/config";
+ const config = configObj;
 
 
  import Avatar from "@app/components/Avatar.svelte";

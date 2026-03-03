@@ -2,6 +2,9 @@
   import type { ActiveTab } from "./Header.svelte";
   import type { BaseUrl, Repo, SeedingPolicy } from "@http-client";
 
+ import configObj from "@app/lib/config";
+ const config = configObj;
+
   import Button from "@app/components/Button.svelte";
   import Icon from "@app/components/Icon.svelte";
   import Link from "@app/components/Link.svelte";
