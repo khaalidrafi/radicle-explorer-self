@@ -1,6 +1,6 @@
-name = "explorer"
-compatibility_date = "2025-04-03"
-account_id = "dcd58b4607e42dafa1592d13077a60bc"
+name = "radicle-explorer-self"
+# Set this to today's date
+compatibility_date = "2026-03-02"
 
 [assets]
 directory = "build"
