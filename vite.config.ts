@@ -4,8 +4,6 @@ import virtual from "vite-plugin-virtual";
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 
-import { cloudflare } from "@cloudflare/vite-plugin";
-
 export default defineConfig({
   test: {
     environment: "happy-dom",
@@ -79,7 +77,6 @@ export default defineConfig({
         }
       },
     },
-    cloudflare(),
   ],
   server: {
     host: "localhost",
