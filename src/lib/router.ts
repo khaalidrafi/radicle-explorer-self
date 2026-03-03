@@ -17,11 +17,10 @@ import { userRouteToPath, userTitle } from "@app/views/users/router";
 
 export { type Route };
 
-// Add these constants near the top of your router.ts file
 const DEFAULT_BASE_URL: BaseUrl = {
-    hostname: config.user.defaultNode.hostname,  // or your preferred seed node
-    port: config.user.defaultNode.port,
-    scheme: config.user.defaultNode.scheme
+  hostname: config.user.defaultNode.hostname, // or your preferred seed node
+  port: config.user.defaultNode.port,
+  scheme: config.user.defaultNode.scheme,
 };
 
 const DEFAULT_USER_DID = config.user.did;
@@ -123,11 +122,11 @@ function setTitle(loadedRoute: LoadedRoute) {
     title.push("Error");
     title.push("Radicle");
   } else if (loadedRoute.resource === "users") {
-    if (loadedRoute.params.did.pubkey === config.user.did.replace("did:key:", "")){
+    if (
+      loadedRoute.params.did.pubkey === config.user.did.replace("did:key:", "")
+    ) {
       title.push(config.user.sitename);
-    }
-    else {
-      console.log(config.user.did, loadedRoute, (loadedRoute.params.did === config.user.did.replace("did:key:", "")));
+    } else {
       title.push(...userTitle(loadedRoute));
     }
   } else if (loadedRoute.resource === "notFound") {
@@ -196,6 +195,7 @@ function urlToRoute(url: URL): Route | null {
     case "seeds": {
       const hostAndPort = segments.shift();
       if (hostAndPort) {
+        console.log("empty route");
         const baseUrl = extractBaseUrl(hostAndPort);
         const id = segments.shift();
         if (id === "users") {
@@ -205,14 +205,17 @@ function urlToRoute(url: URL): Route | null {
           }
           return null;
         } else if (id) {
+          console.log("ID route");
           return resolveRepoRoute(baseUrl, id, segments, url.search);
         } else {
+          console.log("else route");
           return {
             resource: "nodes",
             params: { baseUrl, repoPageIndex: 0 },
           };
         }
       } else {
+        console.log("outer else route");
         return {
           resource: "nodes",
           params: undefined,
@@ -220,13 +223,15 @@ function urlToRoute(url: URL): Route | null {
       }
     }
     case "": {
-        return { 
-  resource: "users", 
-  baseUrl: DEFAULT_BASE_URL,  // ← Must use property name
-  did: DEFAULT_USER_DID       // ← Must use property name
-};
+      console.log("empty route");
+      return {
+        resource: "users",
+        baseUrl: DEFAULT_BASE_URL, // ← Must use property name
+        did: DEFAULT_USER_DID, // ← Must use property name
+      };
     }
     default: {
+      console.log("default route");
       return null;
     }
   }
