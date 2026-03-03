@@ -123,7 +123,13 @@ function setTitle(loadedRoute: LoadedRoute) {
     title.push("Error");
     title.push("Radicle");
   } else if (loadedRoute.resource === "users") {
-    title.push(...userTitle(loadedRoute));
+    if (loadedRoute.params.did.pubkey === config.user.did.replace("did:key:", "")){
+      title.push(config.user.sitename);
+    }
+    else {
+      console.log(config.user.did, loadedRoute, (loadedRoute.params.did === config.user.did.replace("did:key:", "")));
+      title.push(...userTitle(loadedRoute));
+    }
   } else if (loadedRoute.resource === "notFound") {
     title.push("Page not found");
     title.push("Radicle");
