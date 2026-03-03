@@ -1,5 +1,6 @@
 /build/
 node_modules/
+package-lock.json
 NOTES
 config/local*
 radicle-httpd/target
@@ -25,3 +26,5 @@ tests/visual/snapshots/**/*
 # IDEs and Editors
 .idea
 .vscode
+.dir-locals.el
+*.org
