@@ -1,5 +1,17 @@
 declare module "virtual:*" {
   const config: {
+    user: {
+      did: string;
+      sitename: string;
+      description: string;
+      url: string;
+      avatar: string;
+      defaultNode: {
+        hostname: string,
+        port: number,
+        scheme: string
+      }
+    };
     nodes: {
       requiredApiVersion: string;
       fallbackPublicExplorer: string;
