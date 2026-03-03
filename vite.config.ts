@@ -4,6 +4,8 @@ import virtual from "vite-plugin-virtual";
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 export default defineConfig({
   test: {
     environment: "happy-dom",
@@ -28,6 +30,30 @@ export default defineConfig({
       compilerOptions: { dev: process.env.NODE_ENV !== "production" },
     }),
     {
+      name: "html-transform",
+      transformIndexHtml(html) {
+        const cfg = config.util.toObject();
+        return html
+          .replace(
+            /\{\{sitename\}\}/g,
+            cfg.user?.sitename || "Radicle Explorer",
+          )
+          .replace(
+            /\{\{description\}\}/g,
+            cfg.user?.description || "Explore the Radicle network",
+          )
+          .replace(/\{\{url\}\}/g, cfg.user?.url || "https://app.radicle.xyz")
+          .replace(
+            /\{\{domain\}\}/g,
+            new URL(cfg.user?.url || "https://app.radicle.xyz").hostname,
+          )
+          .replace(
+            /\{\{avatar\}\}/g,
+            cfg.user?.avatar ? `${cfg.user.avatar}` : "/avatar.svg",
+          );
+      },
+    },
+    {
       name: "inject-config-loader",
       transformIndexHtml() {
         if (process.env.VITE_RUNTIME_CONFIG === "true") {
@@ -38,21 +64,22 @@ export default defineConfig({
                 type: "text/javascript",
               },
               children: `
-      try {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", "/config.json", false);
-        xhr.send(null);
-        window.__CONFIG__ = JSON.parse(xhr.responseText);
-      } catch {
-        console.warn("Couldn't load config.json from the server, using built-in fallback config.");
-      }
-    `,
+    try {
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", "/config.json", false);
+      xhr.send(null);
+      window.__CONFIG__ = JSON.parse(xhr.responseText);
+    } catch {
+      console.warn("Couldn't load config.json from the server, using built-in fallback config.");
+    }
+  `,
               injectTo: "head-prepend",
             },
           ];
         }
       },
     },
+    cloudflare(),
   ],
   server: {
     host: "localhost",
