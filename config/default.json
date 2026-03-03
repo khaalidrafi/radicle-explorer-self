@@ -2,6 +2,7 @@
     "user": {
         "did": "did:key:z6Mkfg2J5p2aAqC9RLxUK1EHxxHx1bGCdNRoeTEc2TGoWebN",
         "sitename": "Khalid's Git",
+        "avatar": "khalid.png",
         "defaultNode": {
             "hostname": "rosa.radicle.xyz",
             "port": 443,

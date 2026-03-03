@@ -1,19 +1,27 @@
 <script lang="ts">
+  import config from "@app/lib/config";
+
   import { createIcon } from "@app/lib/blockies";
 
   export let nodeId: string;
   export let variant: "small" | "large";
 
-  function createContainer(source: string) {
-    source = source.replace("did:key:", "");
-    const seed = source.toLowerCase();
-    const avatar = createIcon({
-      seed,
-      size: 8,
-      scale: 16,
-    });
-    return avatar.toDataURL();
-  }
+ function createContainer(source: string) {
+     if (source === config.user.did.replace("did:key:", "")){
+         const avatarSrc = config.user.avatar;
+         return avatarSrc;
+     }
+     else{
+         source = source.replace("did:key:", "");
+         const seed = source.toLowerCase();
+         const avatar = createIcon({
+             seed,
+             size: 8,
+             scale: 16,
+         });
+     return avatar.toDataURL();
+     }
+ }
 </script>
 
 <style>
