@@ -1,41 +1,43 @@
 {
-    "user": {
-        "did": "did:key:z6Mkfg2J5p2aAqC9RLxUK1EHxxHx1bGCdNRoeTEc2TGoWebN",
-        "sitename": "Khalid's Git",
-        "avatar": "khalid.png",
-        "defaultNode": {
-            "hostname": "rosa.radicle.xyz",
-            "port": 443,
-            "scheme": "https"
-        }
+  "user": {
+    "did": "did:key:z6Mkfg2J5p2aAqC9RLxUK1EHxxHx1bGCdNRoeTEc2TGoWebN",
+    "sitename": "Khalid's Git",
+    "description": "Explore Khalid's Git Repositories",
+    "url": "https://git.khalidrafi.tech",
+    "avatar": "/khalid.png",
+    "defaultNode": {
+      "hostname": "rosa.radicle.xyz",
+      "port": 443,
+      "scheme": "https"
+    }
+  },
+  "nodes": {
+    "fallbackPublicExplorer": "https://app.radicle.xyz/nodes/$host/$rid$path",
+    "requiredApiVersion": "~0.18.0",
+    "defaultHttpdPort": 443,
+    "defaultLocalHttpdPort": 8080,
+    "defaultHttpdScheme": "https"
+  },
+  "source": {
+    "commitsPerPage": 30
+  },
+  "supportWebsite": "https://radicle.zulipchat.com",
+  "deploymentId": null,
+  "preferredSeeds": [
+    {
+      "hostname": "rosa.radicle.xyz",
+      "port": 443,
+      "scheme": "https"
     },
-    "nodes": {
-        "fallbackPublicExplorer": "https://app.radicle.xyz/nodes/$host/$rid$path",
-        "requiredApiVersion": "~0.18.0",
-        "defaultHttpdPort": 443,
-        "defaultLocalHttpdPort": 8080,
-        "defaultHttpdScheme": "https"
+    {
+      "hostname": "seed.radicle.xyz",
+      "port": 443,
+      "scheme": "https"
     },
-    "source": {
-        "commitsPerPage": 30
-    },
-    "supportWebsite": "https://radicle.zulipchat.com",
-    "deploymentId": null,
-    "preferredSeeds": [
-        {
-            "hostname": "rosa.radicle.xyz",
-            "port": 443,
-            "scheme": "https"
-        },
-        {
-            "hostname": "seed.radicle.xyz",
-            "port": 443,
-            "scheme": "https"
-        },
-        {
-            "hostname": "iris.radicle.xyz",
-            "port": 443,
-            "scheme": "https"
-        }
-    ]
+    {
+      "hostname": "iris.radicle.xyz",
+      "port": 443,
+      "scheme": "https"
+    }
+  ]
 }

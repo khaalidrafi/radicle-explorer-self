@@ -18,10 +18,7 @@
     },
     "crane": {
       "inputs": {
-        "nixpkgs": [
-          "heartwood",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["heartwood", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1722907532,
@@ -96,23 +93,14 @@
     },
     "root": {
       "inputs": {
-        "flake-utils": [
-          "heartwood",
-          "flake-utils"
-        ],
+        "flake-utils": ["heartwood", "flake-utils"],
         "heartwood": "heartwood",
-        "nixpkgs": [
-          "heartwood",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["heartwood", "nixpkgs"]
       }
     },
     "rust-overlay": {
       "inputs": {
-        "nixpkgs": [
-          "heartwood",
-          "nixpkgs"
-        ]
+        "nixpkgs": ["heartwood", "nixpkgs"]
       },
       "locked": {
         "lastModified": 1722910815,
