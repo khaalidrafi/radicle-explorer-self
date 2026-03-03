@@ -5,9 +5,11 @@
   import * as utils from "@app/lib/utils";
   import { fetchRepoInfos } from "@app/components/RepoCard";
   import { handleError } from "@app/views/nodes/error";
+ import config from "@app/lib/config";
 
-  import Avatar from "@app/components/Avatar.svelte";
-  import Badge from "@app/components/Badge.svelte";
+
+ import Avatar from "@app/components/Avatar.svelte";
+ import Badge from "@app/components/Badge.svelte";
   import Button from "@app/components/Button.svelte";
   import Command from "@app/components/Command.svelte";
   import ExternalLink from "@app/components/ExternalLink.svelte";
@@ -248,8 +250,8 @@
         width="24"
         height="24"
         class="logo"
-        alt="Radicle logo"
-        src="/radicle.svg" />
+        alt="{config.user.sitename} logo"
+        src="/logo.svg" />
     </Link>
   </header>
 

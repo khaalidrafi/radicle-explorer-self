@@ -1,4 +1,5 @@
 <script lang="ts">
+  import config from "@app/lib/config";
   import Footer from "@app/App/Footer.svelte";
   import MobileFooter from "@app/App/MobileFooter.svelte";
   import Link from "@app/components/Link.svelte";
@@ -50,8 +51,8 @@
         width="24"
         height="24"
         class="logo"
-        alt="Radicle logo"
-        src="/radicle.svg" />
+        alt="{config.user.sitename} logo"
+        src="/logo.svg" />
     </Link>
   </div>
   <div class="content">

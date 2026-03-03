@@ -212,8 +212,8 @@
             width="24"
             height="24"
             class="logo"
-            alt="Radicle logo"
-            src="/radicle.svg" />
+            alt="{config.user.sitename} logo"
+            src="/logo.svg" />
         </div>
       </Link>
     </div>

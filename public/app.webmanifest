@@ -10,7 +10,7 @@
       "type": "image/png",
       "sizes": "192x192"
     },
-    { "src": "/radicle.svg", "type": "image/svg", "sizes": "44x44" }
+    { "src": "/logo.svg", "type": "image/svg", "sizes": "44x44" }
   ],
   "display": "standalone"
 }

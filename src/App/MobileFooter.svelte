@@ -1,40 +1,42 @@
 <script lang="ts">
-  import Button from "@app/components/Button.svelte";
-  import Icon from "@app/components/Icon.svelte";
-  import Link from "@app/components/Link.svelte";
-  import Popover from "@app/components/Popover.svelte";
+ import config from "@app/lib/config";
 
-  import Help from "./Help.svelte";
-  import Settings from "./Settings.svelte";
+ import Button from "@app/components/Button.svelte";
+ import Icon from "@app/components/Icon.svelte";
+ import Link from "@app/components/Link.svelte";
+ import Popover from "@app/components/Popover.svelte";
+
+ import Help from "./Help.svelte";
+ import Settings from "./Settings.svelte";
 </script>
 
 <style>
-  .mobile-footer {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0.5rem;
-    z-index: 1;
-    gap: 0.5rem;
-    border-top: 1px solid var(--color-fill-separator);
-    background-color: var(--color-background-default);
-  }
-  .divider {
-    border-bottom: 1px solid var(--color-fill-separator);
-    margin: 1.5rem 0;
-  }
+ .mobile-footer {
+     width: 100%;
+     display: flex;
+     justify-content: space-between;
+     padding: 0.5rem;
+     z-index: 1;
+     gap: 0.5rem;
+     border-top: 1px solid var(--color-fill-separator);
+     background-color: var(--color-background-default);
+ }
+ .divider {
+     border-bottom: 1px solid var(--color-fill-separator);
+     margin: 1.5rem 0;
+ }
 </style>
 
 <div class="mobile-footer">
-  <Link
-    style="width: 100%; display: flex; align-items: center; justify-content: center;"
-    route={{ resource: "nodes", params: undefined }}>
+    <Link
+        style="width: 100%; display: flex; align-items: center; justify-content: center;"
+        route={{ resource: "nodes", params: undefined }}>
     <img
-      width="16"
-      height="16"
-      class="logo"
-      alt="Radicle logo"
-      src="/radicle.svg" />
+        width="16"
+        height="16"
+        class="logo"
+        alt="{config.user.sitename} logo"
+        src="/logo.svg" />
   </Link>
 
   <slot />
