@@ -25,15 +25,24 @@ import type {
 
 import * as Syntax from "@app/lib/syntax";
 import config from "@app/lib/config";
+import repoAliases from "/config/repos.json";
+import { getNameByRid } from "@app/lib/repoMapping";
+import { isDefaultRoute } from "@app/lib/router";
 import { HttpdClient } from "@http-client";
 import { ResponseError, ResponseParseError } from "@http-client/lib/fetcher";
 import { cached } from "@app/lib/cache";
 import { handleError, unreachableError } from "@app/views/repos/error";
 import { unreachable } from "@app/lib/utils";
 import { nodePath } from "@app/views/nodes/router";
+import {
+  fetchRepoInfos,
+  fetchRepoRidByNameAndDelegate,
+} from "@app/components/RepoCard";
 
 export const PATCHES_PER_PAGE = 10;
 export const ISSUES_PER_PAGE = 10;
+
+let currentUrl: URL | undefined;
 
 export type RepoRoute =
   | RepoTreeRoute
@@ -805,6 +814,12 @@ export function resolveRepoRoute(
     content = segments.shift();
   }
 
+  // if (!repo.includes("rad:")) {
+  //   fetchRepoRidByNameAndDelegate(baseUrl, { show: "all", perPage: config.owner.repos.perPage }, utils.formatDid(did), repo)
+  //     .then((ret) => repo = ret);
+  //   console.log("repo", repo);
+  // }
+
   if (!content || content === "tree") {
     return {
       resource: "repo.source",
@@ -915,7 +930,18 @@ function resolvePatchesRoute(
 export function repoRouteToPath(route: RepoRoute): string {
   const node = nodePath(route.node);
 
-  const pathSegments = [node, route.repo];
+  // console.log("currentUrl", currentUrl);
+
+  let pathSegments;
+
+  if (isDefaultRoute()) {
+    const repoRoute = "/" + getNameByRid(route.repo);
+    pathSegments = [repoRoute];
+  } else {
+    pathSegments = [node, route.repo];
+  }
+
+  // console.log("pathSegments", pathSegments);
 
   if (route.resource === "repo.source") {
     if (route.peer) {
@@ -950,6 +976,7 @@ export function repoRouteToPath(route: RepoRoute): string {
     }
 
     pathSegments.push("history");
+    console.log("history", pathSegments);
 
     if (route.revision) {
       pathSegments.push(route.revision);
