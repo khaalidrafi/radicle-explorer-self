@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -e
+
+CONFIG_FILE="$(dirname "$0")/../config/default.json"
+REPOS_FILE="$(dirname "$0")/../config/repos.json"
+
+# Read config values using jq
+HOSTNAME=$(jq -r '.owner.defaultNode.hostname' "$CONFIG_FILE")
+PORT=$(jq -r '.owner.defaultNode.port' "$CONFIG_FILE")
+SCHEME=$(jq -r '.owner.defaultNode.scheme' "$CONFIG_FILE")
+DID=$(jq -r '.owner.did' "$CONFIG_FILE")
+
+URL="${SCHEME}://${HOSTNAME}:${PORT}/api/v1/delegates/${DID}/repos?show=all"
+
+echo "🔍 Fetching repos from $HOSTNAME"
+
+# Fetch and build JSON in one step
+curl -s "$URL" | jq '
+  map(
+    select(.payloads."xyz.radicle.project" != null) |
+    {
+      key: .payloads."xyz.radicle.project".data.name,
+      value: .rid
+    }
+  ) | 
+  from_entries
+' > "$REPOS_FILE"
+
+# Show what was created
+echo ""
+jq -r 'to_entries[] | "  📦 \(.key)"' "$REPOS_FILE"
+
+COUNT=$(jq 'length' "$REPOS_FILE")
+echo ""
+echo "✅ Generated $COUNT aliases in config/repos.json"

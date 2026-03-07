@@ -5,7 +5,8 @@
   "scripts": {
     "start": "vite",
     "serve": "vite preview",
-    "build": "vite build && scripts/copy-katex-assets && scripts/install-twemoji-assets",
+    "repos": "scripts/generate-repos",
+    "build": "vite build && scripts/copy-katex-assets && scripts/install-twemoji-assets && npm run repos",
     "postinstall": "scripts/copy-katex-assets && scripts/install-twemoji-assets",
     "check": "scripts/check",
     "check:radicle-httpd": "cd radicle-httpd && cargo clippy --all --tests && cargo fmt --all --check",
@@ -15,7 +16,7 @@
     "test:e2e:local": "scripts/compile-local-httpd && USE_LOCAL_HTTPD=true NODE_CONFIG_ENV='test' TZ='UTC' playwright test",
     "test:http-client:unit": "NODE_CONFIG_ENV='test' TZ='UTC' vitest run --config http-client/vite.config.ts --reporter verbose",
     "test:radicle-httpd": "cd radicle-httpd && cargo test --all-features",
-    "deploy": "npx rimraf build && npm clean-install && npm run build && scripts/inject-plausible && npx wrangler deploy"
+    "deploy": "npx rimraf build && npm clean-install && npm run build && scripts/inject-analytics && npx wrangler deploy"
   },
   "type": "module",
   "engines": {

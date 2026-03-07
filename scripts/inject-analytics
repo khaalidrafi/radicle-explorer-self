@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+
+import fs from "fs";
+
+const file = "build/index.html";
+const snippet = `<script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>`;
+
+const html = fs.readFileSync(file, "utf8");
+
+if (html.includes(snippet)) {
+  console.log("ℹ️ Script already present, skipping");
+  process.exit(0);
+}
+
+if (!html.includes("</head>")) {
+  console.error("❌ </head> not found in index.html");
+  process.exit(1);
+}
+
+const updated = html.replace("</body>", `  ${snippet}\n  </body>`);
+
+fs.writeFileSync(file, updated);
+console.log("✅ Simple Analytics script injected");
