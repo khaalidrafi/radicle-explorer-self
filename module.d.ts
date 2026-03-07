@@ -7,10 +7,10 @@ declare module "virtual:*" {
       url: string;
       avatar: string;
       defaultNode: {
-        hostname: string,
-        port: number,
-        scheme: string
-      }
+        hostname: string;
+        port: number;
+        scheme: string;
+      };
     };
     nodes: {
       requiredApiVersion: string;
