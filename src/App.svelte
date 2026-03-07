@@ -17,6 +17,7 @@
   import History from "@app/views/repos/History.svelte";
   import Issue from "@app/views/repos/Issue.svelte";
   import Issues from "@app/views/repos/Issues.svelte";
+  import Owner from "@app/views/owner/View.svelte";
   import Nodes from "@app/views/nodes/View.svelte";
   import NotFound from "@app/views/NotFound.svelte";
   import Patch from "@app/views/repos/Patch.svelte";
@@ -69,6 +70,8 @@
   <div class="loading" role="progressbar" aria-label="App loading">
     <Loading />
   </div>
+{:else if $activeRouteStore.resource === "owner"}
+  <Owner {...$activeRouteStore.params} />
 {:else if $activeRouteStore.resource === "nodes"}
   <Nodes {...$activeRouteStore.params} />
 {:else if $activeRouteStore.resource === "users"}
