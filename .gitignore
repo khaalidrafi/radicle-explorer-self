@@ -1,8 +1,9 @@
 /build/
+/tests/
 node_modules/
-package-lock.json
 NOTES
 config/local*
+wrangler.jsonc
 radicle-httpd/target
 radicle-httpd/build/artifacts
 
@@ -26,5 +27,4 @@ tests/visual/snapshots/**/*
 # IDEs and Editors
 .idea
 .vscode
-.dir-locals.el
 *.org
