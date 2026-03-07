@@ -1,12 +1,18 @@
 {
-  // Top-level configuration
-  "name": "khalid-git",
-  // Set this to today's date
-  "compatibility_date": "2026-03-03",
-  "account_id": "a001d3fb6924fda27e3570844b6c8dbc",
-  
-  "assets": {
-      "directory": "build",
-      "not_found_handling": "single-page-application"
-  }
+    // Top-level configuration
+    "name": "khalid-git",
+    // Set this to today's date
+    "compatibility_date": "2026-03-03",
+    "account_id": "a001d3fb6924fda27e3570844b6c8dbc",
+    
+    "assets": {
+        "directory": "build",
+        "not_found_handling": "single-page-application"
+    },
+    "routes": [
+        {
+            "pattern": "git.khalidrafi.tech",
+            "custom_domain": true
+        }
+    ]
 }
