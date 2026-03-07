@@ -1,10 +1,18 @@
 {
-  "user": {
+  "owner": {
     "did": "did:key:z6Mkfg2J5p2aAqC9RLxUK1EHxxHx1bGCdNRoeTEc2TGoWebN",
     "sitename": "Khalid's Git",
     "description": "Explore Khalid's Git Repositories",
+    "bio": "Welcome to Khalid's Git",
     "url": "https://git.khalidrafi.tech",
     "avatar": "/khalid.png",
+    "repos": {
+      "perPage": 24,
+      "pinned": [
+        "rad:z3wSfGTKhTTx4p4R4dSUFtiWAHp7p",
+        "rad:zZu6zho3STEy7yVtjg8ejUNkKfXM"
+      ]
+    },
     "defaultNode": {
       "hostname": "rosa.radicle.xyz",
       "port": 443,
@@ -26,11 +34,6 @@
   "preferredSeeds": [
     {
       "hostname": "rosa.radicle.xyz",
-      "port": 443,
-      "scheme": "https"
-    },
-    {
-      "hostname": "seed.radicle.xyz",
       "port": 443,
       "scheme": "https"
     },

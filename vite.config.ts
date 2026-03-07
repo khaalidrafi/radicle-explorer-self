@@ -34,20 +34,20 @@ export default defineConfig({
         return html
           .replace(
             /\{\{sitename\}\}/g,
-            cfg.user?.sitename || "Radicle Explorer",
+            cfg.owner?.sitename || "Radicle Explorer",
           )
           .replace(
             /\{\{description\}\}/g,
-            cfg.user?.description || "Explore the Radicle network",
+            cfg.owner?.description || "Explore the Radicle network",
           )
-          .replace(/\{\{url\}\}/g, cfg.user?.url || "https://app.radicle.xyz")
+          .replace(/\{\{url\}\}/g, cfg.owner?.url || "https://app.radicle.xyz")
           .replace(
             /\{\{domain\}\}/g,
-            new URL(cfg.user?.url || "https://app.radicle.xyz").hostname,
+            new URL(cfg.owner?.url || "https://app.radicle.xyz").hostname,
           )
           .replace(
             /\{\{avatar\}\}/g,
-            cfg.user?.avatar ? `${cfg.user.avatar}` : "/avatar.svg",
+            cfg.owner?.avatar ? `${cfg.owner.avatar}` : "/avatar.svg",
           );
       },
     },
