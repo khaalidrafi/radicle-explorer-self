@@ -6,6 +6,7 @@ import { get, writable } from "svelte/store";
 import * as mutexExecutor from "@app/lib/mutexExecutor";
 import * as utils from "@app/lib/utils";
 import config from "@app/lib/config";
+import repoAliases from "/config/repos.json";
 import {
   repoRouteToPath,
   repoTitle,
@@ -14,16 +15,17 @@ import {
 import { loadRoute } from "@app/lib/router/definitions";
 import { nodePath } from "@app/views/nodes/router";
 import { userRouteToPath, userTitle } from "@app/views/users/router";
+import { ownerRouteToPath } from "@app/views/owner/router";
+import {
+  fetchRepoInfos,
+  fetchRepoRidByNameAndDelegate,
+} from "@app/components/RepoCard";
 
 export { type Route };
 
-const DEFAULT_BASE_URL: BaseUrl = {
-  hostname: config.user.defaultNode.hostname, // or your preferred seed node
-  port: config.user.defaultNode.port,
-  scheme: config.user.defaultNode.scheme,
-};
+const DEFAULT_BASE_URL: BaseUrl = config.preferredSeeds[0];
 
-const DEFAULT_USER_DID = config.user.did;
+const DEFAULT_USER_DID = config.owner.did;
 
 const InitialStore = { resource: "booting" as const };
 
@@ -41,6 +43,15 @@ export function useDefaultNavigation(event: MouseEvent) {
     event.metaKey ||
     event.shiftKey
   );
+}
+
+export function isDefaultRoute() {
+  currentUrl = new URL(window.location.href);
+  const segments = currentUrl.pathname.split("/");
+
+  // console.log(segments);
+  let defaultRoute = currentUrl.pathname === "/" || segments[1] in repoAliases;
+  return defaultRoute;
 }
 
 export async function loadFromLocation(): Promise<void> {
@@ -121,11 +132,13 @@ function setTitle(loadedRoute: LoadedRoute) {
   } else if (loadedRoute.resource === "error") {
     title.push("Error");
     title.push("Radicle");
+  } else if (loadedRoute.resource === "owner") {
+    title.push(config.owner.sitename);
   } else if (loadedRoute.resource === "users") {
     if (
-      loadedRoute.params.did.pubkey === config.user.did.replace("did:key:", "")
+      loadedRoute.params.did.pubkey === config.owner.did.replace("did:key:", "")
     ) {
-      title.push(config.user.sitename);
+      title.push(config.owner.sitename);
     } else {
       title.push(...userTitle(loadedRoute));
     }
@@ -188,16 +201,25 @@ export function extractBaseUrl(hostAndPort: string): BaseUrl {
 
 function urlToRoute(url: URL): Route | null {
   const segments = url.pathname.substring(1).split("/");
+  // console.log("url", url);
+  // console.log("segments", segments);
 
-  const resource = segments.shift();
+  let resource = segments.shift();
+  let repoAlias;
+  if (resource in repoAliases) {
+    repoAlias = resource;
+    resource = "repos";
+  }
+  console.log("resource ", resource);
   switch (resource) {
     case "nodes":
     case "seeds": {
+      console.log("seeds route", resource);
       const hostAndPort = segments.shift();
       if (hostAndPort) {
-        console.log("empty route");
         const baseUrl = extractBaseUrl(hostAndPort);
         const id = segments.shift();
+        console.log("baseUrl", baseUrl, "id", id);
         if (id === "users") {
           const did = segments.shift();
           if (did) {
@@ -206,6 +228,8 @@ function urlToRoute(url: URL): Route | null {
           return null;
         } else if (id) {
           console.log("ID route");
+          console.log([baseUrl, id, segments, url.search]);
+          console.log(resolveRepoRoute(baseUrl, id, segments, url.search));
           return resolveRepoRoute(baseUrl, id, segments, url.search);
         } else {
           console.log("else route");
@@ -222,16 +246,24 @@ function urlToRoute(url: URL): Route | null {
         };
       }
     }
+    case "repos": {
+      const rid = repoAliases[repoAlias];
+        console.log("rid", rid);
+          const baseUrl = config.preferredSeeds[0];
+          console.log("default", [baseUrl, rid, segments, url.search]);
+          return resolveRepoRoute(baseUrl, rid, segments, url.search);
+
+    }
     case "": {
       console.log("empty route");
       return {
-        resource: "users",
-        baseUrl: DEFAULT_BASE_URL, // ← Must use property name
-        did: DEFAULT_USER_DID, // ← Must use property name
+        resource: "owner",
+        baseUrl: config.preferredSeeds[0],
       };
     }
     default: {
-      console.log("default route");
+      console.log("default route", repoAliases);
+
       return null;
     }
   }
@@ -239,11 +271,9 @@ function urlToRoute(url: URL): Route | null {
 
 export function routeToPath(route: Route): string {
   if (route.resource === "nodes") {
-    if (route.params === undefined) {
-      return "/";
-    } else {
-      return nodePath(route.params.baseUrl);
-    }
+    return nodePath(route.params.baseUrl);
+  } else if (route.resource === "owner") {
+    return "/";
   } else if (route.resource === "users") {
     return userRouteToPath(route);
   } else if (

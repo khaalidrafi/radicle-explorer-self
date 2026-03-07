@@ -206,15 +206,7 @@
     <div class="breadcrumbs">
       <Link
         style="display: flex; align-items: center;"
-        route={{
-          resource: "users",
-          baseUrl: {
-            hostname: config.user.defaultNode.hostname,
-            port: config.user.defaultNode.port,
-            scheme: config.user.defaultNode.scheme,
-          },
-          did: config.user.did,
-        }}>
+        route={{ resource: "owner", baseUrl: undefined }}>
         <div
           style="background-color: var(--color-background-default);border-radius: var(--border-radius-small); display: flex; padding: 0.5rem 0;">
           <img
@@ -222,7 +214,7 @@
             width="24"
             height="24"
             class="logo"
-            alt="{config.user.sitename} logo"
+            alt="{config.owner.sitename} logo"
             src="/logo.svg" />
         </div>
       </Link>

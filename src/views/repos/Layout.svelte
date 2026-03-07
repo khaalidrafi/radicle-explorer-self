@@ -5,6 +5,7 @@
   import configObj from "@app/lib/config";
   const config = configObj;
 
+  import { isDefaultRoute } from "@app/lib/router";
   import Button from "@app/components/Button.svelte";
   import Icon from "@app/components/Icon.svelte";
   import Link from "@app/components/Link.svelte";
@@ -106,25 +107,33 @@
     <header>
       <div class="breadcrumbs">
         <span class="breadcrumb">
-          <Link
-            style="display: flex; align-items: center; gap: 0.25rem;"
-            route={{
-              resource: "nodes",
-              params: {
-                baseUrl,
-                repoPageIndex: 0,
-              },
-            }}>
-            <img
-              width="24"
-              height="24"
-              class="avatar"
-              alt="Radicle logo"
-              src={nodeAvatarUrl
-                ? nodeAvatarUrl
-                : "/images/default-seed-avatar.png"} />
-            {baseUrl.hostname}
-          </Link>
+          {#if isDefaultRoute()}
+            <Link
+              style="display: flex; align-items: center;"
+              route={{ resource: "owner", baseUrl: undefined }}>
+              {config.owner.sitename}
+            </Link>
+          {:else}
+            <Link
+              style="display: flex; align-items: center; gap: 0.25rem;"
+              route={{
+                resource: "nodes",
+                params: {
+                  baseUrl,
+                  repoPageIndex: 0,
+                },
+              }}>
+              <img
+                width="24"
+                height="24"
+                class="avatar"
+                alt="Radicle logo"
+                src={nodeAvatarUrl
+                  ? nodeAvatarUrl
+                  : "/images/default-seed-avatar.png"} />
+              {baseUrl.hostname}
+            </Link>
+          {/if}
         </span>
 
         <Separator />
@@ -148,20 +157,12 @@
       </div>
       <Link
         style="display: flex; align-items: center;"
-        route={{
-          resource: "users",
-          baseUrl: {
-            hostname: config.user.defaultNode.hostname,
-            port: config.user.defaultNode.port,
-            scheme: config.user.defaultNode.scheme,
-          },
-          did: config.user.did,
-        }}>
+        route={{ resource: "owner", baseUrl: undefined }}>
         <img
           width="24"
           height="24"
           class="logo"
-          alt="{config.user.sitename} logo"
+          alt="{config.owner.sitename} logo"
           src="/logo.svg" />
       </Link>
     </header>

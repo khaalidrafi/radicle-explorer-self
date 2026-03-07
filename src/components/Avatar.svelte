@@ -7,8 +7,8 @@
   export let variant: "small" | "large";
 
   function createContainer(source: string) {
-    if (config.user.did.includes(source)) {
-      const avatarSrc = config.user.avatar;
+    if (config.owner.did.includes(source)) {
+      const avatarSrc = config.owner.avatar;
       return avatarSrc;
     } else {
       source = source.replace("did:key:", "");

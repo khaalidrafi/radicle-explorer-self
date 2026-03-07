@@ -31,20 +31,12 @@
 <div class="mobile-footer">
   <Link
     style="width: 100%; display: flex; align-items: center; justify-content: center;"
-    route={{
-      resource: "users",
-      baseUrl: {
-        hostname: config.user.defaultNode.hostname,
-        port: config.user.defaultNode.port,
-        scheme: config.user.defaultNode.scheme,
-      },
-      did: config.user.did,
-    }}>
+    route={{ resource: "owner", baseUrl: undefined }}>
     <img
       width="16"
       height="16"
       class="logo"
-      alt="{config.user.sitename} logo"
+      alt="{config.owner.sitename} logo"
       src="/logo.svg" />
   </Link>
 

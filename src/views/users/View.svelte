@@ -245,20 +245,12 @@
     </div>
     <Link
       style="display: flex; align-items: center;"
-      route={{
-        resource: "users",
-        baseUrl: {
-          hostname: config.user.defaultNode.hostname,
-          port: config.user.defaultNode.port,
-          scheme: config.user.defaultNode.scheme,
-        },
-        did: config.user.did,
-      }}>
+      route={{ resource: "owner", baseUrl: undefined }}>
       <img
         width="24"
         height="24"
         class="logo"
-        alt="{config.user.sitename} logo"
+        alt="{config.owner.sitename} logo"
         src="/logo.svg" />
     </Link>
   </header>
