@@ -43,3 +43,26 @@ export async function fetchRepoInfos(
     }
   });
 }
+
+export async function fetchRepoRidByNameAndDelegate(
+  baseUrl: BaseUrl,
+  query?: RepoListQuery,
+  delegate?: string,
+  repoName: string,
+): Promise<RepoInfo[]> {
+  const api = new HttpdClient(baseUrl);
+  let repos: Repo[];
+
+  if (delegate) {
+    repos = await api.repo.getByDelegate(delegate, query);
+  } else {
+    repos = await api.repo.getAll(query);
+  }
+
+  const target = await (async () => {
+    return repos
+      .filter(r => Boolean(r.payloads["xyz.radicle.project"]))
+      .find(r => r.payloads["xyz.radicle.project"].data.name === repoName);
+  })();
+  return target;
+}
