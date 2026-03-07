@@ -4,12 +4,14 @@ import type {
 } from "@http-client/lib/fetcher";
 import type { RepoLoadedRoute, RepoRoute } from "@app/views/repos/router";
 import type { UserLoadedRoute, UserRoute } from "@app/views/users/router";
+import type { OwnerLoadedRoute, OwnerRoute } from "@app/views/owner/router";
 import type { NodesRoute, NodesLoadedRoute } from "@app/views/nodes/router";
 import type { ComponentProps } from "svelte";
 import type IconLarge from "@app/components/IconLarge.svelte";
 
 import { loadRepoRoute } from "@app/views/repos/router";
 import { loadUserRoute } from "@app/views/users/router";
+import { loadOwnerRoute } from "@app/views/owner/router";
 import { loadNodeRoute } from "@app/views/nodes/router";
 
 interface BootingRoute {
@@ -35,6 +37,7 @@ export interface ErrorRoute {
 
 export type Route =
   | BootingRoute
+  | OwnerRoute
   | UserRoute
   | ErrorRoute
   | NotFoundRoute
@@ -43,6 +46,7 @@ export type Route =
 
 export type LoadedRoute =
   | BootingRoute
+  | OwnerLoadedRoute
   | UserLoadedRoute
   | ErrorRoute
   | NotFoundRoute
@@ -55,6 +59,8 @@ export async function loadRoute(
 ): Promise<LoadedRoute> {
   if (route.resource === "nodes") {
     return await loadNodeRoute(route.params);
+  } else if (route.resource === "owner") {
+    return await loadOwnerRoute(route);
   } else if (route.resource === "users") {
     return await loadUserRoute(route);
   } else if (
