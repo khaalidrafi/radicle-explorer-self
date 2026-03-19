@@ -2,6 +2,7 @@
   import type { ActiveTab } from "./Header.svelte";
   import type { BaseUrl, Repo, SeedingPolicy } from "@http-client";
 
+  import { isDefaultRoute } from "@app/lib/router";
   import Button from "@app/components/Button.svelte";
   import ContextRepo from "@app/views/repos/Sidebar/ContextRepo.svelte";
   import Help from "@app/App/Help.svelte";
@@ -246,6 +247,23 @@
         {seedingPolicy} />
     </div>
     <div class="vertical-buttons" class:expanded style:gap="0.5rem">
+
+        {#if !isDefaultRoute()}
+        <Popover popoverPositionBottom="0" popoverPositionLeft="3rem">
+            <Button
+                stylePadding="0 0.75rem"
+                variant="background"
+                title="Settings"
+                slot="toggle"
+                let:toggle
+                on:click={toggle}>
+                <Icon name="settings" />
+            </Button>
+
+            <Settings slot="popover" />
+        </Popover>
+        {/if}
+        
       <Popover popoverPositionBottom="0" popoverPositionLeft="3rem">
         <Button
           stylePadding="0 0.75rem"
