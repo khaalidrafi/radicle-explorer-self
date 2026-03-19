@@ -18,7 +18,6 @@
   import IconButton from "@app/components/IconButton.svelte";
   import Id from "@app/components/Id.svelte";
   import Link from "@app/components/Link.svelte";
-  import Loading from "@app/components/Loading.svelte";
   import MobileFooter from "@app/App/MobileFooter.svelte";
   import Placeholder from "@app/components/Placeholder.svelte";
   import Popover from "@app/components/Popover.svelte";
@@ -30,7 +29,6 @@
   export let baseUrl: BaseUrl;
   export let node: NodeIdentity;
   export let did: { prefix: string; pubkey: string };
-  export let nodeAvatarUrl: string | undefined;
   export let stats: NodeStats;
 
   let scrollY: number;
@@ -100,21 +98,22 @@
     z-index: 1;
   }
 
-  .empty-state {
+ /* .empty-state {
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: var(--font-size-small);
-  }
-  .empty-state,
-  .loading {
+    }
+    .empty-state,
+    .loading {
     height: 100%;
-  }
-
-  .content {
-    grid-column: 2 / 3;
-    margin-left: 30rem;
-  }
+    }
+  */
+ 
+ .content {
+     grid-column: 2 / 3;
+     margin-left: 30rem;
+ }
   .mobile-header {
     height: 8rem;
     display: flex;
@@ -145,11 +144,6 @@
     height: 2rem;
   }
 
-  .logo {
-    height: var(--button-regular-height);
-    margin: 0 0.5rem;
-  }
-
   .mobile-footer {
     display: none;
   }
@@ -159,11 +153,6 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem;
-  }
-  .subtitle {
-    font-size: var(--font-size-small);
-    color: var(--color-foreground-dim);
-    padding: 1rem 0;
   }
   .avatar {
     border-radius: var(--border-radius-tiny);
@@ -222,13 +211,10 @@
     .wrapper {
       padding: 1rem;
     }
-    .empty-state,
-    .loading {
-      height: calc(100% - 6rem);
-    }
-    .footer {
-      display: none;
-    }
+      /* .empty-state,
+         .loading {
+         height: calc(100% - 6rem);
+         } */
     .mobile-footer {
       grid-area: footer;
       margin-top: auto;
@@ -247,9 +233,9 @@
         style="display: flex; align-items: center;"
         route={{ resource: "owner", baseUrl: undefined }}>
         <div
-          style="background-color: var(--color-background-default);border-radius: var(--border-radius-small); display: flex;">
+          style="background-color: var(--color-background-default);border-radius: var(--border-radius-small); display: flex; padding: 0.4rem 0;">
           <img
-            style:margin="0 0.5rem"
+            style:margin="0 0.4rem"
             width="24"
             height="24"
             class="logo"
@@ -265,99 +251,99 @@
       class="sidebar global-hide-on-mobile-down"
       style:top={`${top}px`}
       style:height={`calc(100% - ${top}px)`}>
-        <div class="title">
-            <div class="user-info">
-                <div style:margin-right="0.5rem">
-                    <Avatar nodeId={did.pubkey} variant="large" />
-                </div>
-                <div style:margin-top="0.25rem">
-                    <div class="txt-medium txt-semibold txt-overflow">
-                        {node.alias || utils.formatNodeId(did.pubkey)}
-                    </div>
-                    <div style:margin-top="0.25rem">
-                        <UserAddress {did} />
-                    </div>
-                </div>
-                <div
-                    class="global-hide-on-small-desktop-down"
-                    style="justify-self: end;">
-                    <Popover popoverPositionTop="2.5rem">
-                        <Button
-                            slot="toggle"
-                            let:toggle
-                            on:click={toggle}
-                            variant="secondary">
-                            <div class="global-flex-item">
-                                <Icon name="plus" />
-                                <span>Follow</span>
-                            </div>
-                        </Button>
-                        <div slot="popover" style:width="24rem">
-                            <span class="follow-label">
-                                Use the <ExternalLink href="https://radicle.xyz">
-                                Radicle CLI
-                                </ExternalLink> to start following this user.
-                            </span>
-                            <span class="follow-label">
-                                Following a user ensures that their contributions are fetched
-                                onto your device.
-                            </span>
-                            <Command command={`rad follow ${did.pubkey}`} />
-                        </div>
-                    </Popover>
-                </div>
+      <div class="title">
+        <div class="user-info">
+          <div style:margin-right="0.5rem">
+            <Avatar nodeId={did.pubkey} variant="large" />
+          </div>
+          <div style:margin-top="0.25rem">
+            <div class="txt-medium txt-semibold txt-overflow">
+              {node.alias || utils.formatNodeId(did.pubkey)}
             </div>
-            {#if config.owner.bio}
-                <div class="bio txt-small">
-                    {@html render(config.owner.bio)}
-                </div>
-            {:else}
-                <div
-                    class="global-flex-item txt-small txt-missing"
-                    style:align-items="center"
-                    style:justify-content="space-between"
-                    style:gap="0.25rem">
-                    No description configured.
-                    <Popover popoverPositionTop="0" popoverPositionLeft="2.25rem">
-                        <IconButton slot="toggle" let:toggle on:click={toggle}>
-                            <Icon name="info" />
-                        </IconButton>
-
-                        <div slot="popover" class="box">
-                            If you're the owner of this node, you can customize this page by
-                            setting the
-                            <code>avatarUrl</code>
-                            ,
-                            <code>bannerUrl</code>
-                            and
-                            <code>description</code>
-                            fields under the
-                            <code>web</code>
-                            object in your node config.
-                            <div style:margin-top="1rem">
-                                <Command command="rad config edit" fullWidth />
-                            </div>
-                        </div>
-                    </Popover>
-                </div>
-            {/if}
-
-            <div style:margin-bottom="1rem">
-                <div class="sidebar-item txt-small">
-                    <span>SSH Key</span>
-                    <Id id={node.ssh.full}>
-                        <div class="id txt-overflow">{node.ssh.full}</div>
-                    </Id>
-                </div>
-                <div class="sidebar-item txt-small">
-                    <span>SSH Hash</span>
-                    <Id id={node.ssh.hash}>
-                        <div class="id txt-overflow">{node.ssh.hash}</div>
-                    </Id>
-                </div>
+            <div style:margin-top="0.25rem">
+              <UserAddress {did} />
             </div>
+          </div>
+          <div
+            class="global-hide-on-small-desktop-down"
+            style="justify-self: end;">
+            <Popover popoverPositionTop="2.5rem">
+              <Button
+                slot="toggle"
+                let:toggle
+                on:click={toggle}
+                variant="secondary">
+                <div class="global-flex-item">
+                  <Icon name="plus" />
+                  <span>Follow</span>
+                </div>
+              </Button>
+              <div slot="popover" style:width="24rem">
+                <span class="follow-label">
+                  Use the <ExternalLink href="https://radicle.xyz">
+                    Radicle CLI
+                  </ExternalLink> to start following this user.
+                </span>
+                <span class="follow-label">
+                  Following a user ensures that their contributions are fetched
+                  onto your device.
+                </span>
+                <Command command={`rad follow ${did.pubkey}`} />
+              </div>
+            </Popover>
+          </div>
         </div>
-        <div class="sidebar-footer">
+        {#if config.owner.bio}
+          <div class="bio txt-small">
+            {@html render(config.owner.bio)}
+          </div>
+        {:else}
+          <div
+            class="global-flex-item txt-small txt-missing"
+            style:align-items="center"
+            style:justify-content="space-between"
+            style:gap="0.25rem">
+            No description configured.
+            <Popover popoverPositionTop="0" popoverPositionLeft="2.25rem">
+              <IconButton slot="toggle" let:toggle on:click={toggle}>
+                <Icon name="info" />
+              </IconButton>
+
+              <div slot="popover" class="box">
+                If you're the owner of this node, you can customize this page by
+                setting the
+                <code>avatarUrl</code>
+                ,
+                <code>bannerUrl</code>
+                and
+                <code>description</code>
+                fields under the
+                <code>web</code>
+                object in your node config.
+                <div style:margin-top="1rem">
+                  <Command command="rad config edit" fullWidth />
+                </div>
+              </div>
+            </Popover>
+          </div>
+        {/if}
+
+        <div style:margin-bottom="1rem">
+          <div class="sidebar-item txt-small">
+            <span>SSH Key</span>
+            <Id id={node.ssh.full}>
+              <div class="id txt-overflow">{node.ssh.full}</div>
+            </Id>
+          </div>
+          <div class="sidebar-item txt-small">
+            <span>SSH Hash</span>
+            <Id id={node.ssh.hash}>
+              <div class="id txt-overflow">{node.ssh.hash}</div>
+            </Id>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar-footer">
         <div
           style:margin-top="1.5rem"
           style:display="flex"
