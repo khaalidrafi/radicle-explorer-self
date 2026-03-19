@@ -118,7 +118,7 @@
               <img
                 width="24"
                 height="24"
-                class="logo"
+                class="avatar"
                 alt="{config.owner.sitename} logo"
                 src="/logo.svg" />
               {config.owner.sitename}
