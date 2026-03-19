@@ -8,10 +8,14 @@
   import { isDefaultRoute } from "@app/lib/router";
   import Button from "@app/components/Button.svelte";
   import Icon from "@app/components/Icon.svelte";
+  import IconButton from "@app/components/IconButton.svelte";
   import Link from "@app/components/Link.svelte";
   import MobileFooter from "@app/App/MobileFooter.svelte";
   import Separator from "./Separator.svelte";
   import Sidebar from "@app/views/repos/Sidebar.svelte";
+  import Settings from "@app/App/Settings.svelte";
+  import Help from "@app/App/Help.svelte";
+  import Popover from "@app/components/Popover.svelte";
 
   export let activeTab: ActiveTab | undefined = undefined;
   export let seedingPolicy: SeedingPolicy;
@@ -111,6 +115,12 @@
             <Link
               style="display: flex; align-items: center;"
               route={{ resource: "owner", baseUrl: undefined }}>
+              <img
+                width="24"
+                height="24"
+                class="logo"
+                alt="{config.owner.sitename} logo"
+                src="/logo.svg" />
               {config.owner.sitename}
             </Link>
           {:else}
@@ -155,16 +165,40 @@
           <slot name="breadcrumb" />
         </div>
       </div>
-      <Link
-        style="display: flex; align-items: center;"
-        route={{ resource: "owner", baseUrl: undefined }}>
-        <img
-          width="24"
-          height="24"
-          class="logo"
-          alt="{config.owner.sitename} logo"
-          src="/logo.svg" />
-      </Link>
+      {#if isDefaultRoute()}
+        <div class="right-section">
+          <Popover popoverPositionTop="2.5rem" popoverPositionRight="0">
+            <IconButton
+              slot="toggle"
+              let:toggle
+              on:click={toggle}
+              inline
+              ariaLabel="Settings">
+              <Icon name="settings" />
+            </IconButton>
+
+            <div
+              slot="popover"
+              style:display="flex"
+              style:flex-direction="column"
+              style:gap="0.75rem"
+              style:align-items="flex-start">
+              <Settings />
+            </div>
+          </Popover>
+        </div>
+      {:else}
+        <Link
+          style="display: flex; align-items: center;"
+          route={{ resource: "owner", baseUrl: undefined }}>
+          <img
+            width="24"
+            height="24"
+            class="logo"
+            alt="{config.owner.sitename} logo"
+            src="/logo.svg" />
+        </Link>
+      {/if}
     </header>
   </div>
 

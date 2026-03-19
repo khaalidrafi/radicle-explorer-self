@@ -250,20 +250,6 @@
         <Button
           stylePadding="0 0.75rem"
           variant="background"
-          title="Settings"
-          slot="toggle"
-          let:toggle
-          on:click={toggle}>
-          <Icon name="settings" />
-        </Button>
-
-        <Settings slot="popover" />
-      </Popover>
-
-      <Popover popoverPositionBottom="0" popoverPositionLeft="3rem">
-        <Button
-          stylePadding="0 0.75rem"
-          variant="background"
           title="Help"
           slot="toggle"
           let:toggle
