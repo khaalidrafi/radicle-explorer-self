@@ -935,7 +935,13 @@ export function repoRouteToPath(route: RepoRoute): string {
   let pathSegments;
 
   if (isDefaultRoute()) {
-    const repoRoute = "/" + getNameByRid(route.repo);
+    let repoRoute;
+    if (Object.values(repoAliases).includes(route.repo)) {
+      repoRoute = "/" + getNameByRid(route.repo);
+    }
+    else {
+      repoRoute = "/" + route.repo;
+    }
     pathSegments = [repoRoute];
   } else {
     pathSegments = [node, route.repo];

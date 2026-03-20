@@ -50,7 +50,7 @@ export function isDefaultRoute() {
   const segments = currentUrl.pathname.split("/");
 
   // console.log(segments);
-  let defaultRoute = currentUrl.pathname === "/" || segments[1] in repoAliases;
+  let defaultRoute = currentUrl.pathname === "/" || segments[1] in repoAliases || segments[1].startsWith("rad:");
   return defaultRoute;
 }
 
@@ -206,8 +206,12 @@ function urlToRoute(url: URL): Route | null {
 
   let resource = segments.shift();
   let repoAlias;
+  let repoRid;
   if (resource in repoAliases) {
     repoAlias = resource;
+    resource = "repos";
+  } else if (resource.startsWith("rad:")) {
+    repoRid = resource;
     resource = "repos";
   }
   // console.log("resource ", resource);
@@ -244,7 +248,7 @@ function urlToRoute(url: URL): Route | null {
       }
     }
     case "repos": {
-      const rid = repoAliases[repoAlias];
+      const rid = repoAlias ? repoAliases[repoAlias] : repoRid;
       // console.log("rid", rid);
       const baseUrl = config.preferredSeeds[0];
       // console.log("default", [baseUrl, rid, segments, url.search]);
