@@ -6,9 +6,9 @@ CONFIG_FILE="$(dirname "$0")/../config/default.json"
 REPOS_FILE="$(dirname "$0")/../config/repos.json"
 
 # Read config values using jq
-HOSTNAME=$(jq -r '.owner.defaultNode.hostname' "$CONFIG_FILE")
-PORT=$(jq -r '.owner.defaultNode.port' "$CONFIG_FILE")
-SCHEME=$(jq -r '.owner.defaultNode.scheme' "$CONFIG_FILE")
+HOSTNAME=$(jq -r '.preferredSeeds[0].hostname' "$CONFIG_FILE")
+PORT=$(jq -r '.preferredSeeds[0].port' "$CONFIG_FILE")
+SCHEME=$(jq -r '.preferredSeeds[0].scheme' "$CONFIG_FILE")
 DID=$(jq -r '.owner.did' "$CONFIG_FILE")
 
 URL="${SCHEME}://${HOSTNAME}:${PORT}/api/v1/delegates/${DID}/repos?show=all"

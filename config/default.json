@@ -12,11 +12,6 @@
         "rad:z3wSfGTKhTTx4p4R4dSUFtiWAHp7p",
         "rad:zZu6zho3STEy7yVtjg8ejUNkKfXM"
       ]
-    },
-    "defaultNode": {
-      "hostname": "rosa.radicle.xyz",
-      "port": 443,
-      "scheme": "https"
     }
   },
   "nodes": {

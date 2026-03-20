@@ -1,16 +1,11 @@
 declare module "virtual:*" {
   const config: {
-    user: {
+    owner: {
       did: string;
       sitename: string;
       description: string;
       url: string;
       avatar: string;
-      defaultNode: {
-        hostname: string;
-        port: number;
-        scheme: string;
-      };
     };
     nodes: {
       requiredApiVersion: string;
