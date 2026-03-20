@@ -3,6 +3,7 @@
 node_modules/
 NOTES
 config/local*
+config/repos.json
 wrangler.jsonc
 radicle-httpd/target
 radicle-httpd/build/artifacts
@@ -15,6 +16,7 @@ KaTeX_**.woff2
 
 # Twemoji Assets
 public/twemoji/*.svg
+public/*.git
 
 # Integration Tests
 tests/tmp/**/*
@@ -28,3 +30,4 @@ tests/visual/snapshots/**/*
 .idea
 .vscode
 *.org
+*ediff-merge*
