@@ -1,49 +1,48 @@
-# Radicle Explorer
+# Radicle Explorer Self
 
-This user interface lets you interact with [Radicle][rad], a peer-to-peer code collaboration and publishing stack, directly from your web browser.
+A fork of **Radicle Explorer** to give you a personalized web UI for your Radicle repositories.
 
-**Deployment Options:**
+## What you configure
 
-- **Public Server:** The Radicle team maintains a public instance at [app.radicle.xyz][app]
-- **Local-first:** Run the UI locally
-- **Self-hosting:** Deploy the UI on your own server
+All project-specific branding and defaults live in `config/default.json`, under `owner`:
 
-## Local-first
+- `owner.did`: your Radicle DID (used to list your repos)
+- `owner.sitename`, `owner.description`, `owner.bio`: shown in OpenGraph or the UI
+- `owner.url`: your public site URL
+- `owner.avatar`: avatar path (eg. `/khalid.png` in `public/`)
+- `owner.repos.perPage`: number of repositories to show per page in owner view (homepage)
+- `owner.repos.pinned`: pinned repo RIDs shown in owner view
 
-**Prerequisites:**
+The images are under `public/images`. Replace them accordingly without changing their names.
 
-- Recent versions of [Node.js][nod] (20.9.0 or higher) and [npm][npm] installed
+## Quick start (local)
 
-Run the following commands to access the web UI locally:
+**Prerequisites**
+
+* Recent versions of [Node.js][nod] (20.9.0 or higher) and [npm][npm] installed
 
 ```shell
-git clone https://seed.radicle.xyz/z4V1sjrXqjvFdnCUbxPFqd5p4DtH5.git radicle-explorer
-cd radicle-explorer
+git clone https://rosa.radicle.xyz/z3wSfGTKhTTx4p4R4dSUFtiWAHp7p.git radicle-explorer-self
+cd radicle-explorer-self
 npm install
 npm start
 ```
 
-Then open http://localhost:3000 in your favourite browser.
+Open: http://localhost:3000
 
-## Self-Hosting the UI
+## Build for deployment
 
-There are several ways to deploy the UI publicly. Here are two common options:
+``` shell
+npm run build
+```
 
-**Using your own web server:**
+Serve the generated `build/` directory using any static hosting service.
 
-1. Run `npm install && npm build` to create a build for deployment
-2. Configure your web server to serve the contents of the `/build` directory
-
-**Using Vercel (or similar static file hosting):**
-
-1. Fork this repository to create your own version
-2. Configure your Vercel account to deploy the forked repository
-
-**Add Rewrite Rules for Client-Side Routing**
+### SPA rewrite rule
 
 The explorer is a single-page application (SPA). To ensure that all routes are handled correctly, add a rewrite rule to your web server configuration. For example:
 
-Caddy:
+Example (Caddy):
 
 ```
 example.com {
@@ -51,64 +50,29 @@ example.com {
 }
 ```
 
-## Configuration
+## Repo aliases
 
-There are two ways to configure the UI: **at build time** and **at run time**.
+The project will generate `config/repos.json` (name → RID mapping) so you can use URLs like `baseURL/repoAlias`instead of `baseURL/repoRID`.
 
-### Build-Time Configuration
+Generate it:
 
-This method is recommended when deploying to static hosting platforms such as Vercel.
-
-#### Option 1: Create a `local.json` file
-
-1. Copy [`default.json`][def] to a new file in the same directory called `local.json`.
-2. Modify the properties in `local.json` to suit your setup.
-
-#### Option 2: Use environment variables
-
-1. Refer to [`custom-environment-variables.json`][env] for a list of supported environment variables.
-2. Set the desired variables in your environment before building the UI.
-
-> For advanced configuration options, refer to the [`node-config`][nco] documentation.
-
-### Run-Time Configuration
-
-This method is useful when the app is distributed as a precompiled static JS/HTML bundle, such as when installed via a package manager.
-
-You can build the app in a mode that loads configuration dynamically from the server it's deployed to, instead of bundling it at build time.
-
-To enable this behavior, set the environment variable `VITE_RUNTIME_CONFIG=true` during the build:
-
-```bash
-VITE_RUNTIME_CONFIG=true npm run build
+``` shell
+npm run repos
 ```
 
-This will inject a blocking script into the `index.html` that attempts to load the configuration from a pre-defined location (`/config.json`) on the server.
+Notes:
+- `config/repos.json` is **generated** by `scripts/generate-repos` at build time and is **gitignored**.
+- It fetches repositories for `owner.did` from `preferredSeeds[0]`.
+- When you create a new repository on Radicle, you wouldn't be able to use `baseURL/repoAlias` until you regenerate `config/repos.json`.
 
-The config file must be served as static content and must be publicly accessible. The structure of the runtime `config.json` must match the shape of the application's base configuration defined in `config/default.json`.
+## Configuration options
 
-## Contributing
+### `config/local.json` (recommended for private overrides)
 
-- For detailed contribution guidelines, refer to the [CONTRIBUTING.md][con] file
-- To propose changes, open an [issue][iss] or submit a [patch][pat] using Radicle
-
-## Getting in touch
-
-To get in touch with the maintainers, sign up to our [official chat on Zulip][zul].
+1. Copy [`default.json`][def] to a new file in the same directory called
+   `local.json`.
+2. Modify the properties in `local.json` to suit your setup.
 
 ## License
 
-The UI is distributed under the terms of GPLv3. See [LICENSE][lic] for details.
-
-[app]: https://app.radicle.xyz
-[con]: ./CONTRIBUTING.md
-[def]: ./config/default.json
-[env]: ./config/custom-environment-variables.json
-[iss]: https://app.radicle.xyz/nodes/iris.radicle.xyz/rad:z4V1sjrXqjvFdnCUbxPFqd5p4DtH5/issues
-[lic]: ./LICENSE
-[nco]: https://github.com/node-config/node-config/wiki/Configuration-Files
-[nod]: https://nodejs.org
-[npm]: https://www.npmjs.com
-[pat]: https://app.radicle.xyz/nodes/iris.radicle.xyz/rad:z4V1sjrXqjvFdnCUbxPFqd5p4DtH5/patches
-[rad]: https://radicle.xyz
-[zul]: https://radicle.zulipchat.com/#narrow/stream/369278-web
+GPLv3 (see `LICENSE`).
