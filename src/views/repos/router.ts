@@ -976,7 +976,6 @@ export function repoRouteToPath(route: RepoRoute): string {
     }
 
     pathSegments.push("history");
-    console.log("history", pathSegments);
 
     if (route.revision) {
       pathSegments.push(route.revision);

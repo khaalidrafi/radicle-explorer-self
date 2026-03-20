@@ -1,7 +1,6 @@
 <script lang="ts">
   import configObj from "@app/lib/config";
   const config = configObj;
-  console.log("config", config);
 
   import type { BaseUrl, NodeIdentity, NodeStats } from "@http-client";
 
@@ -64,7 +63,6 @@
       repos = repos.filter(element =>
         config.owner.repos.pinned.includes(element.repo.rid),
       );
-      // console.log("pinned repos", repos);
     }
     totalPages = Math.ceil(repos.length / perPage);
 
@@ -189,7 +187,6 @@
             {/if}
           </div>
 
-          {console.log("total inside", totalPages)}
           {#if totalPages > 1}
             <div class="pagination">
               {#if page !== 0}

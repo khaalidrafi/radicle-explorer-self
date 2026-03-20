@@ -210,16 +210,16 @@ function urlToRoute(url: URL): Route | null {
     repoAlias = resource;
     resource = "repos";
   }
-  console.log("resource ", resource);
+  // console.log("resource ", resource);
   switch (resource) {
     case "nodes":
     case "seeds": {
-      console.log("seeds route", resource);
+      // console.log("seeds route", resource);
       const hostAndPort = segments.shift();
       if (hostAndPort) {
         const baseUrl = extractBaseUrl(hostAndPort);
         const id = segments.shift();
-        console.log("baseUrl", baseUrl, "id", id);
+        // console.log("baseUrl", baseUrl, "id", id);
         if (id === "users") {
           const did = segments.shift();
           if (did) {
@@ -227,19 +227,16 @@ function urlToRoute(url: URL): Route | null {
           }
           return null;
         } else if (id) {
-          console.log("ID route");
-          console.log([baseUrl, id, segments, url.search]);
-          console.log(resolveRepoRoute(baseUrl, id, segments, url.search));
+          // console.log([baseUrl, id, segments, url.search]);
+          // console.log(resolveRepoRoute(baseUrl, id, segments, url.search));
           return resolveRepoRoute(baseUrl, id, segments, url.search);
         } else {
-          console.log("else route");
           return {
             resource: "nodes",
             params: { baseUrl, repoPageIndex: 0 },
           };
         }
       } else {
-        console.log("outer else route");
         return {
           resource: "nodes",
           params: undefined,
@@ -248,22 +245,20 @@ function urlToRoute(url: URL): Route | null {
     }
     case "repos": {
       const rid = repoAliases[repoAlias];
-        console.log("rid", rid);
-          const baseUrl = config.preferredSeeds[0];
-          console.log("default", [baseUrl, rid, segments, url.search]);
-          return resolveRepoRoute(baseUrl, rid, segments, url.search);
-
+      // console.log("rid", rid);
+      const baseUrl = config.preferredSeeds[0];
+      // console.log("default", [baseUrl, rid, segments, url.search]);
+      return resolveRepoRoute(baseUrl, rid, segments, url.search);
     }
     case "": {
-      console.log("empty route");
+      // console.log("empty route");
       return {
         resource: "owner",
         baseUrl: config.preferredSeeds[0],
       };
     }
     default: {
-      console.log("default route", repoAliases);
-
+      // console.log("default route", repoAliases);
       return null;
     }
   }
