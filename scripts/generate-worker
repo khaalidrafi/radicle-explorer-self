@@ -31,7 +31,6 @@ export default {
     if (gitMatch) {
       const [, repoName, subPath = ''] = gitMatch;
       console.log("Git match found:", repoName, "subPath:", subPath);
-      console.log("Available repos:", Object.keys(REPO_MAP));
       
       const rid = REPO_MAP[repoName];
       
@@ -43,13 +42,13 @@ export default {
         });
       }
       
-      // Remove 'rad:' prefix and construct target URL
+      // Remove 'rad:' prefix and construct target URL (including query string!)
       const ridClean = rid.replace(/^rad:/, '');
-      const targetUrl = `${SEED_URL}/${ridClean}.git${subPath}`;
+      const targetUrl = `${SEED_URL}/${ridClean}.git${subPath}${url.search}`;
       
       console.log(`Proxying ${repoName}.git -> ${targetUrl}`);
       
-      // Proxy to Radicle seed
+      // Proxy directly to Radicle seed
       return fetch(targetUrl, {
         method: request.method,
         headers: request.headers,
