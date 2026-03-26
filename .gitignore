@@ -4,6 +4,7 @@ node_modules/
 NOTES
 config/local*
 config/repos.json
+.wrangler/
 wrangler.jsonc
 radicle-httpd/target
 radicle-httpd/build/artifacts
