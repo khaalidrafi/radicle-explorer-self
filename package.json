@@ -9,6 +9,7 @@
     "worker": "scripts/generate-worker",
     "map": "npm run repos && npm run worker",
     "dev": "npx wrangler dev",
+    "reload": "npm run repos && npm run worker && npx wrangler dev",
     "build": "vite build && scripts/copy-katex-assets && scripts/install-twemoji-assets && npm run map",
     "postinstall": "scripts/copy-katex-assets && scripts/install-twemoji-assets",
     "check": "scripts/check",
