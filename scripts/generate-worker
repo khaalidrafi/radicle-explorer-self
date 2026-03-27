@@ -28,7 +28,6 @@ export default {
     // Git proxy: Match pattern /repo-name.git/... or /repo-name.git
     const gitMatch = path.match(/^\/([^\/]+)\.git(\/.*)?$/);
     
-    if (gitMatch) {
       const [, repoName, subPath = ''] = gitMatch;
       console.log("Git match found:", repoName, "subPath:", subPath);
       
@@ -54,10 +53,7 @@ export default {
         headers: request.headers,
         body: request.body,
       });
-    }
     
-    // Otherwise, serve static assets (Explorer UI)
-    return env.ASSETS.fetch(request);
   }
 };
 EOF
