@@ -1,6 +1,8 @@
 # Radicle Explorer Self
 
-A fork of **Radicle Explorer** to give you a personalized web UI for your Radicle repositories.
+A fork of **Radicle Explorer** to showcase your personal repositories on [Radicle](radicle.xyz) with a self-branded web UI.
+
+View a demo of this in my own deployment at https://git.khalidrafi.tech
 
 ## What you configure
 
@@ -19,7 +21,7 @@ The images are under `public/images`. Replace them accordingly without changing 
 
 **Prerequisites**
 
-* Recent versions of [Node.js][nod] (20.9.0 or higher) and [npm][npm] installed
+- Recent versions of [Node.js][nod] (20.9.0 or higher) and [npm][npm] installed
 
 ```shell
 git clone https://rosa.radicle.xyz/z3wSfGTKhTTx4p4R4dSUFtiWAHp7p.git radicle-explorer-self
@@ -32,7 +34,7 @@ Open: http://localhost:3000
 
 ## Build for deployment
 
-``` shell
+```shell
 npm run build
 ```
 
@@ -56,11 +58,12 @@ The project will generate `config/repos.json` (name → RID mapping) so you can 
 
 Generate it:
 
-``` shell
+```shell
 npm run repos
 ```
 
 Notes:
+
 - `config/repos.json` is **generated** by `scripts/generate-repos` at build time and is **gitignored**.
 - It fetches repositories for `owner.did` from `preferredSeeds[0]`.
 - When you create a new repository on Radicle, you wouldn't be able to use `baseURL/repoAlias` until you regenerate `config/repos.json`.
@@ -69,8 +72,7 @@ Notes:
 
 ### `config/local.json` (recommended for private overrides)
 
-1. Copy [`default.json`][def] to a new file in the same directory called
-   `local.json`.
+1. Copy [`default.json`][def] to a new file in the same directory called `local.json`.
 2. Modify the properties in `local.json` to suit your setup.
 
 ## License
